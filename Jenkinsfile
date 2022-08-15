@@ -18,7 +18,7 @@ pipeline {
         }
         stage ('Push To DockerHub') {
             steps {
-                dir (azure-vote) {
+                dir (pipelinetest/azure-vote) {
                     script {
                         docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
                             def image = docker.build('projectdocker1203:latest')
