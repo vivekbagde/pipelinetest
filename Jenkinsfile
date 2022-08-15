@@ -20,8 +20,7 @@ pipeline {
         }
         stage ('Push To DockerHub') {
             steps {
-                echo "WorkSpace is $WORKSPACE"
-                dir ($WORKSPACE/azure-vote) {
+                dir (azure-vote/) {
                     script {
                         docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
                             def image = docker.build('projectdocker1203:latest')
