@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage ('verify branch') {
             steps {
-                echo 'verify "${GIT_BRANCH}"'
+                sh 'echo verify "$GIT_BRANCH"'
             }
         }
     }
