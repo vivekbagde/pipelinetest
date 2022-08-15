@@ -13,6 +13,7 @@ pipeline {
                   cd azure-vote/
                   docker build -t projectdocker1203/jenkinspipeline .
                   docker images -a
+                  trivy projectdocker1203/jenkinspipeline
                   docker rmi projectdocker1203/jenkinspipeline
                   cd ..
                 '''
