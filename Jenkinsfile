@@ -1,4 +1,3 @@
-def image
 pipeline {
     agent any
     stages {
