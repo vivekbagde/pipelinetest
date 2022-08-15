@@ -14,8 +14,9 @@ pipeline {
         stage ('Docker Build') {
             steps {
                 docker.withRegistry( '', registryCredential ) {
-                dockerImage.push("$BUILD_NUMBER")
-                dockerImage.push('latest')
+                   dockerImage.push("$BUILD_NUMBER")
+                   dockerImage.push('latest')
+                }
             }
         }
     }
