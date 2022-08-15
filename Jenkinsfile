@@ -13,9 +13,11 @@ pipeline {
         }
         stage ('Docker Build') {
             steps {
-                docker.withRegistry( '', registryCredential ) {
-                   dockerImage.push("$BUILD_NUMBER")
-                   dockerImage.push('latest')
+                script {
+                  docker.withRegistry( 'https://index.docker.io/v1/', "$registryCredential" ) {
+                     dockerImage.push("$BUILD_NUMBER")
+                     dockerImage.push('latest')
+                  }
                 }
             }
         }
