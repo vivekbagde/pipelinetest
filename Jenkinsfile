@@ -18,6 +18,7 @@ pipeline {
             steps {
                 sh 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
                 sh 'docker push projectdocker1203/test:$BUILD_NUMBER'
+		sh 'docker rmi projectdocker1203/test:$BUILD_NUMBER'
             }
         }
     }
