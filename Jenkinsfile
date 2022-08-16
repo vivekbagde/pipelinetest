@@ -6,12 +6,12 @@ pipeline {
     stages {
         stage ('verify branch') {
             steps {
-                echo "verify $GIT_BRANCH"
+                echo "$GIT_BRANCH"
             }
         }
         stage ('Docker Build') {
                 when {
-                    branch "master"
+                    branch "$GIT_BRANCH"
                 }
                 steps {
                     sh 'docker build -t projectdocker1203:$BUILD_NUMBER ./azure-vote'
@@ -19,7 +19,7 @@ pipeline {
         }
         stage ('Push To DockerHub') {
             when {
-                branch "master"
+                branch "$GIT_BRANCH"
             }
             steps {
                 sh 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
