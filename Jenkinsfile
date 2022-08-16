@@ -1,24 +1,29 @@
 pipeline {
     agent any
     environment {
-        imagename = "projectdocker1203/testing"
-        registryCredential = 'dockerhub'
-        dockerImage = ''
+        dockerhub=credentials('dockerhub')
     }
     stages {
         stage ('verify branch') {
             steps {
-                sh 'echo verify "$GIT_BRANCH"'
+                echo "verify $GIT_BRANCH"
             }
         }
         stage ('Docker Build') {
-            steps {
-                script {
-                  docker.withRegistry( 'https://index.docker.io/v1/', "$registryCredential" ) {
-                     dockerImage.push("$BUILD_NUMBER")
-                     dockerImage.push('latest')
-                  }
+                when {
+                    branch "master"
                 }
+                steps {
+                    sh 'docker build -t projectdocker1203:$BUILD_NUMBER ./azure-vote'
+                }
+        }
+        stage ('Push To DockerHub') {
+            when {
+                branch "master"
+            }
+            steps {
+                sh 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
+                sh 'docker push projectdocker1203:$BUILD_NUMBER'
             }
         }
     }
